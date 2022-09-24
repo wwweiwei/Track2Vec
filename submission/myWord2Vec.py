@@ -115,13 +115,13 @@ class myWord2Vec(RecModel):
         ts1 = time.time()
         self.train_playcount(df)
         ts2 = time.time()
-        print('playcount: ', str(ts2-ts1))
+        # print('playcount: ', str(ts2-ts1))
         self.train_gender(df)
         ts3 = time.time()
-        print('gender: ', str(ts3-ts2))
+        # print('gender: ', str(ts3-ts2))
         self.train_user_track_count(df)
         ts4 = time.time()
-        print('utc: ', str(ts4-ts3))
+        # print('utc: ', str(ts4-ts3))
 
 
     def pred_playcount(self, user, user_playcount, user_tracks):
@@ -195,13 +195,28 @@ class myWord2Vec(RecModel):
     def ensemble(self, pred_1, pred_2, pred_3):
         all_pred = list(itertools.chain(pred_1, pred_2, pred_3))
         counter = Counter(all_pred)
-        print('counter length: ', len(counter))
+        # print('counter length: ', len(counter))
         counter_top_k = counter.most_common(self.top_k)
         pred = []
         for tuple in counter_top_k:
-            pred.append(tuple[0])
+            if tuple[1] > 1:
+                pred.append(tuple[0])
 
-        return pred
+        for i in range(self.top_k):
+            # print("Bot: {}, {}, {}, {}".format(len(pred), len(pred_1), len(pred_2), len(pred_3)))
+            if pred_1[0] not in pred:
+                pred.append(pred_1.pop(0))
+            else:
+                pred_1.pop(0)
+            if pred_2[0] not in pred:
+                pred.append(pred_2.pop(0))
+            else:
+                pred_2.pop(0)
+            if pred_3[0] not in pred:
+                pred.append(pred_3.pop(0))
+            else:
+                pred_3.pop(0)
+        return pred[:100]
 
     def predict(self, user_ids: pd.DataFrame):
         ts5 = time.time()
@@ -223,15 +238,16 @@ class myWord2Vec(RecModel):
             pred_2 = self.pred_gender(user, user_gender, user_tracks_gender)
             pred_3 = self.pred_user_track_count(user, user_track_count, user_tracks_utc)
 
-            user_predictions = self.ensemble(pred_1, pred_2, pred_3)
+            user_predictions = self.ensemble(pred_1, pred_2, pred_3)    # 1x100
             predictions.append(user_predictions)
 
             pbar.update(1)
         pbar.close()
 
         users = user_ids["user_id"].values.reshape(-1, 1)
-        predictions = np.concatenate([users, np.array(predictions)], axis=1)
+        predictions = np.array(predictions)
+        predictions = np.concatenate([users, predictions], axis=1)
 
         ts6 = time.time()
-        print('pred: ', str(ts6-ts5))
+        # print('pred: ', str(ts6-ts5))
         return pd.DataFrame(predictions, columns=['user_id', *[str(i) for i in range(k)]]).set_index('user_id')
