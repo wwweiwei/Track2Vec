@@ -4,9 +4,9 @@
 
 This is the submission of team wwweiwei to the [EvalRS Data Challenge](https://github.com/RecList/evalRS-CIKM-2022). 
 * Proposed Framework: Track2Vec
-![Track2Vec Framework](../images/Track2Vec_framework.jpg)
+![Track2Vec Framework](images/Track2Vec_framework.jpg)
 * Proposed Fairness Metric: Miss Rate - Inverse Ground Truth Frequency (MR-ITF)
-![MR-ITF Equation](../images/MR_ITF_equation.jpg)
+![MR-ITF Equation](images/MR_ITF_equation.jpg)
 
 ## Instructions
 ### Setup
