@@ -15,6 +15,7 @@ This is the submission of team wwweiwei to the [EvalRS Data Challenge](https://g
     conda env create -f environment.yml
     ```
 ### Run script
-  ```
-  python submission.py
-  ```
+    ```
+    python submission.py
+    ```
+* Notes: Our proposed metric MR-ITF will automatically report in the corresponding json file with other standard metric.
