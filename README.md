@@ -4,7 +4,7 @@ This is the submission of team wwweiwei to the [EvalRS Data Challenge](https://g
 ### Setup
 - Build environment
     ```
-    conda env create -f environment.yml
+    pip install -r /path/to/requirements.txt
     ```
 - Place your `upload.env` in the root folder.
 
