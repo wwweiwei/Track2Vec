@@ -16,5 +16,5 @@ This is the submission of team wwweiwei to the [EvalRS Data Challenge](https://g
     ```
 ### Run script
   ```
-  submission.py
+  python submission.py
   ```
