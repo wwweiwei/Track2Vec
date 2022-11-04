@@ -1,5 +1,7 @@
 # Track2Vec - Fairness Music Recommendation with a GPU-Free Customizable-Driven Framework
-This is the submission of team wwweiwei to the [EvalRS Data Challenge](https://github.com/RecList/evalRS-CIKM-2022). 
+This is the submission of team wwweiwei to the [EvalRS Data Challenge](https://github.com/RecList/evalRS-CIKM-2022). <br> 
+Paper link: http://arxiv.org/abs/2210.16590
+
 ## Usage
 ### Setup
 - Build environment
